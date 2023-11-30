@@ -1,0 +1,11 @@
+<div class="right-box">
+    <% if(locals.data.length>0){%>
+        <% for(let i=0 ; i<data.length ; i++) {%>
+            <% const uri = encodeURIComponent(data[i])%>
+            <li><a href=<%=uri%>><%=data[i]%></li>
+        <%} %>
+    <%}
+    else{ %>
+        <h3>Click a category</h3>
+    <%}%>
+</div>
