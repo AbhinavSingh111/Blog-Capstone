@@ -1,4 +1,4 @@
-export const articles = {
+export let articles = {
   technology: {
     "The Impact of 5G Technology on Connectivity":
       "5G technology is reshaping connectivity, offering unprecedented speeds and minimal latency. This revolution is transforming industries, enabling real-time applications, and enhancing user experiences. From smart cities to the Internet of Things (IoT), 5G's influence is profound, promising a future of seamless communication and innovation.",

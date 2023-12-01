@@ -2,7 +2,21 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { articles } from './essays.js';
 
-const category = {
+let domains = [
+    'technology',
+    'business',
+    'lifestyle',
+    'travel',
+    'food',
+    'health',
+    'fashion',
+    'entertainment',
+    'design',
+    'science',
+    'other'
+  ];
+
+let category = {
 
 technology : [
     "The Impact of 5G Technology on Connectivity",
@@ -131,7 +145,7 @@ technology : [
     "Innovations in Materials Science",
     "Psychology Studies and Insights",
     "Chemistry Discoveries and Applications",
-    "Scientific Endeavors: Past, Present, and Future"
+    "Scientific Endeavors: Past, Present, and Future",
   ] 
 }
   
@@ -165,8 +179,33 @@ app.get('/blog-category/:catId',(req,res)=>{
 app.get('/blog-category/:catId/:artId',(req,res)=>{
     let ctid = req.params.catId;
     let art = req.params.artId.replace('%20', ' ');
-    console.log(articles[ctid][art]);
+    // console.log(articles[ctid][art]);
     res.render('partials/article.ejs',{article:articles[ctid][art]});
+})
+
+app.get('/create_article/',(req,res)=>{
+    res.render('create_article.ejs',{categories:domains});
+})
+
+const essay_submmission = (entered_Catg,newCategory,heading,essay)=>{
+    if(domains.includes(entered_Catg)){
+        console.log("yes");
+        category[entered_Catg].push(heading);
+        // console.log(category[entered_Catg]);
+        articles[entered_Catg][heading] = essay;
+        console.log(articles[entered_Catg][heading]);
+    }
+}
+
+app.post('/create_article/submit',(req,res)=>{
+    console.log(req.body.category);
+    console.log(req.body.newCategory);
+    console.log(req.body.heading);
+    console.log(req.body.essay);
+    essay_submmission(req.body.category,req.body.newCategory,req.body.heading,req.body.essay);
+    console.log(category[req.body.category]);
+    res.render('create_article.ejs',{categories:domains});
+
 })
 
 app.listen(port,(req,res)=>{

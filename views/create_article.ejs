@@ -1,0 +1,58 @@
+<%- include('partials/header.ejs')  %>
+<link rel="stylesheet" href="/create_essay.css">
+<body>
+    <form action="/create_article/submit" method="post">
+        <label for="category">Select Category:</label>
+        <select id="category" name="category" required onchange="checkOther()">
+            <option value="" disabled selected>Select a category</option>
+            <% if(locals.categories){
+                for(let i = 0; i<categories.length ;i++){%>
+                    <option value ='<%=categories[i]%>' ><%=categories[i] %> </option>
+                <%}%>
+                
+            <%} %>
+        </select>
+        <div id="otherCategory" style="display: none;">
+            <label for="newCategory">Enter New Category:</label>
+            <input type="text" id="newCategory" name="newCategory" placeholder="Enter the new category">
+        </div>
+
+        <label for="heading">Heading:</label>
+        <input type="text" id="heading" name="heading" placeholder="Enter the heading" required>
+
+        <label for="essay">Essay:</label>
+        <textarea id="essay" name="essay" rows="10" placeholder="Write your essay here..." required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function checkOther() {
+            const categoryDropdown = document.getElementById('category');
+            const otherCategoryInput = document.getElementById('otherCategory');
+
+            if (categoryDropdown.value === 'other') {
+                otherCategoryInput.style.display = 'block';
+            } else {
+                otherCategoryInput.style.display = 'none';
+            }
+
+            // Call the validateForm function immediately when "Other" is selected
+            validateForm();
+        }
+
+        function validateForm() {
+            const categoryDropdown = document.getElementById('category');
+            const newCategoryInput = document.getElementById('newCategory');
+
+            if (categoryDropdown.value === 'other' && !newCategoryInput.value.trim()) {
+                alert('Please enter a new category.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>
