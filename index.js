@@ -180,11 +180,29 @@ app.get('/blog-category/:catId/:artId',(req,res)=>{
     let ctid = req.params.catId;
     let art = req.params.artId.replace('%20', ' ');
     // console.log(articles[ctid][art]);
-    res.render('partials/article.ejs',{article:articles[ctid][art]});
+    res.render('partials/article.ejs',{article:articles[ctid][art] , artUri:'/blog-category/'+ctid+'/'+req.params.artId});
 })
 
 app.get('/create_article/',(req,res)=>{
     res.render('create_article.ejs',{categories:domains});
+})
+
+app.get('/blog-category/:catId/:artId/edit',(req,res)=>{
+    let ctid = req.params.catId;
+    let art = req.params.artId.replace('%20', ' ');
+    res.render('partials/edit_article.ejs',{artUri:'/blog-category/'+ctid+'/'+req.params.artId, title:art, article:articles[ctid][art]})
+    // editButton.onclick(saveContent(ctid,art));
+})
+
+app.post('/blog-category/:catId/:artId/saved',(req,res)=>{
+    // category[]
+    let ctid = req.params.catId;
+    let art = req.params.artId.replace('%20', ' ');
+    const newHead = req.body.headingContent.replace('&nbsp;'," ");
+    category[ctid][art] = newHead;
+    articles[ctid][newHead] = req.body.articleContent;
+    console.log(category[ctid][art]);
+    res.render("index.ejs",{data:[]})
 })
 
 const essay_submmission = (entered_Catg,newCategory,heading,essay)=>{

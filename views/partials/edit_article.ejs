@@ -1,0 +1,44 @@
+<%- include("header.ejs") %>
+    <style>
+        article {
+            border: 2px solid #ccc;
+            /* Set border width and color */
+            padding: 10px;
+            min-height: 100px;
+            /* Set a minimum height to maintain a rectangular shape */
+        }
+    </style>
+    <form action='<%=artUri%>/saved' method="post" id="editableForm">
+        <h1>
+        <article id="editableHeading" contenteditable="true">
+            <%- title %>
+        </article>
+    </h1>
+        <br>
+        <br>
+        <article id="editableArticle" contenteditable="true">
+            <%- article %>
+        </article>
+        <br>
+        <input type="hidden" name="headingContent" id="headingContent">
+        <input type="hidden" name="articleContent" id="articleContent">
+        <div class="left-box body">
+            <button type="button" onclick='submitForm()'>Save</button>
+        </div>
+    </form>
+    <script>
+        function submitForm() {
+            // Get the content of the editable elements
+            const headingContent = document.getElementById('editableHeading').innerHTML;
+            const articleContent = document.getElementById('editableArticle').innerHTML;
+    
+            // Update the values of the hidden input fields
+            document.getElementById('headingContent').value = headingContent;
+            document.getElementById('articleContent').value = articleContent;
+    
+            // Submit the form
+            document.getElementById('editableForm').submit();
+        }
+    </script>
+
+    <!-- <%- include("footer.ejs") %> -->
